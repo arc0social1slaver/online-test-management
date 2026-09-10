@@ -66,7 +66,7 @@ public class AuthService {
         user.setCreatedByTeacher(teacher);
         user.setPasswordHash(passwordEncoder.encode(req.password()));
         user = userRepository.save(user);
-        return new AuthDTOs.UserResponse(user.getId(), user.getEmail(), user.getUsername());
+        return toResponse(user);
     }
 
     @Transactional
@@ -84,5 +84,9 @@ public class AuthService {
         }
         return new AuthDTOs.AuthResponse(user.getId(), user.getRole().name(),
                 jwtService.generateToken(user.getId(), user.getRole().name()));
+    }
+
+    public AuthDTOs.UserResponse toResponse(User user) {
+        return new AuthDTOs.UserResponse(user.getId(), user.getEmail(), user.getUsername(), user.getRole().name());
     }
 }
