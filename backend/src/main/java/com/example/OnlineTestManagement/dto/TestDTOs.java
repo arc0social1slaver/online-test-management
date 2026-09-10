@@ -3,6 +3,7 @@ package com.example.OnlineTestManagement.dto;
 import java.time.Instant;
 import java.util.List;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 
 public final class TestDTOs {
@@ -22,7 +23,29 @@ public final class TestDTOs {
         }
     }
 
+    public record TakeTestResponse(Long id, String title, List<TakeQuestion> questions) {
+    }
+
+    public record TakeQuestion(Long questionId, String text, List<String> choices) {
+    }
+
     public record TestSummary(Long id, String title, int numberOfQuestions, Instant createdAt) {
+    }
+
+    public record ResultDetail(Long resultId, Long testId, String testTitle,
+            Long studentId, String studentUsername, Integer score,
+            Integer totalQuestions, Instant submittedAt,
+            List<ResultAnswer> answers) {
+    }
+
+    public record ResultAnswer(Long questionId, String questionText, List<String> choices,
+            Integer studentAnswerIndex, Integer correctAnswerIndex) {
+    }
+
+    public record AnswerSubmission(Long questionId, @Min(0) @Max(3) Integer answerIndex) {
+    }
+
+    public record SubmitTestRequest(@NotNull List<@Valid AnswerSubmission> answers) {
     }
 
 }
