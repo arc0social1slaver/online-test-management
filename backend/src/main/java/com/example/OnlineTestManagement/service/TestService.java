@@ -112,6 +112,21 @@ public class TestService {
                         testAssignmentRepository.save(testAssignment);
         }
 
+        public List<TestDTOs.TestSummary> studAvailableTest(User student) {
+                Set<Long> accessible = new LinkedHashSet<>(
+                                testAssignmentRepository.findAccessibleTestIdsForStudent(student.getId()));
+                Set<Long> completed = new HashSet<>();
+                testAttemptRepository.findAllByStudentIdOrderBySubmittedAtDesc(student.getId())
+                                .forEach(i -> completed.add(i.getTest().getId()));
+                accessible.removeAll(completed);
+                return testRepository.findAllById(accessible).stream().map(this::summary).toList();
+        }
+
+        public List<TestDTOs.TestSummary> studCompletedTest(User student) {
+                return testAttemptRepository.findAllByStudentIdOrderBySubmittedAtDesc(student.getId()).stream()
+                                .map(i -> summary(i.getTest())).toList();
+        }
+
         @Transactional(readOnly = true)
         public TestDTOs.TakeTestResponse openTest(User student, Long testId) {
                 if (testAttemptRepository.findByTestIdAndStudentId(testId, student.getId()).isPresent()) {
@@ -180,9 +195,38 @@ public class TestService {
                 return toDetail(attempt);
         }
 
+        public List<TestDTOs.ResultSummary> teacherResults(User teacher) {
+                return testAttemptRepository.findAllByTestTeacherIdOrderBySubmittedAtDesc(teacher.getId()).stream()
+                                .map(this::toSummary).toList();
+        }
+
+        public List<TestDTOs.ResultSummary> studentResults(User student) {
+                return testAttemptRepository.findAllByStudentIdOrderBySubmittedAtDesc(student.getId()).stream()
+                                .map(this::toSummary).toList();
+        }
+
+        public TestDTOs.ResultDetail teacherResult(User teacher, Long resultId) {
+                TestAttempt testAttempt = testAttemptRepository.findByIdAndTestTeacherId(resultId, teacher.getId())
+                                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Result not found"));
+
+                return toDetail(testAttempt);
+        }
+
+        public TestDTOs.ResultDetail studentResult(User student, Long resultId) {
+                TestAttempt testAttempt = testAttemptRepository.findByIdAndStudentId(resultId, student.getId())
+                                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Result not found"));
+                return toDetail(testAttempt);
+        }
+
         private TestDTOs.TestSummary summary(Test test) {
                 return new TestDTOs.TestSummary(test.getId(), test.getTitle(), test.getQuestions().size(),
                                 test.getCreatedAt());
+        }
+
+        private TestDTOs.ResultSummary toSummary(TestAttempt a) {
+                return new TestDTOs.ResultSummary(a.getId(), a.getTest().getId(), a.getTest().getTitle(),
+                                a.getStudent().getId(), a.getStudent().getUsername(), a.getScore(),
+                                a.getAnswers().size(), a.getSubmittedAt());
         }
 
         private TestDTOs.ResultDetail toDetail(TestAttempt a) {

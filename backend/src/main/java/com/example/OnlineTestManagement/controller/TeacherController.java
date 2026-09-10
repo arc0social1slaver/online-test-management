@@ -125,4 +125,14 @@ public class TeacherController {
             @Valid @RequestBody TestDTOs.AssignTestRequest assignTestRequest) {
         testService.assign(teacher, testId, assignTestRequest);
     }
+
+    @GetMapping("/results")
+    public List<TestDTOs.ResultSummary> listResults(@AuthenticationPrincipal User teacher) {
+        return testService.teacherResults(teacher);
+    }
+
+    @GetMapping("/results/{resultId}")
+    public TestDTOs.ResultDetail getResult(@AuthenticationPrincipal User teacher, @PathVariable Long resultId) {
+        return testService.teacherResult(teacher, resultId);
+    }
 }

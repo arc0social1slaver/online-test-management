@@ -48,4 +48,9 @@ public final class TestDTOs {
     public record SubmitTestRequest(@NotNull List<@Valid AnswerSubmission> answers) {
     }
 
+    public record ResultSummary(Long resultId, Long testId, String testTitle, Long studentId,
+            String studentUsername, Integer score, Integer totalQuestions,
+            Instant submittedAt) {
+    }
+
 }
