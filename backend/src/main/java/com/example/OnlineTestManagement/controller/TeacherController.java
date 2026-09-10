@@ -3,11 +3,13 @@ package com.example.OnlineTestManagement.controller;
 import com.example.OnlineTestManagement.dto.AuthDTOs;
 import com.example.OnlineTestManagement.dto.ClassDTOs;
 import com.example.OnlineTestManagement.dto.QuestionDTOs;
+import com.example.OnlineTestManagement.dto.TestDTOs;
 import com.example.OnlineTestManagement.entity.User;
 import com.example.OnlineTestManagement.service.AuthService;
 import com.example.OnlineTestManagement.service.ClassRoomService;
 import com.example.OnlineTestManagement.service.QuestionService;
 import com.example.OnlineTestManagement.service.TagService;
+import com.example.OnlineTestManagement.service.TestService;
 
 import java.util.List;
 
@@ -23,13 +25,15 @@ public class TeacherController {
     private final TagService tagService;
     private final QuestionService questionService;
     private final ClassRoomService classRoomService;
+    private final TestService testService;
 
     public TeacherController(AuthService authService, TagService tagService, QuestionService questionService,
-            ClassRoomService classRoomService) {
+            ClassRoomService classRoomService, TestService testService) {
         this.authService = authService;
         this.tagService = tagService;
         this.questionService = questionService;
         this.classRoomService = classRoomService;
+        this.testService = testService;
     }
 
     @PostMapping("/students")
@@ -108,5 +112,17 @@ public class TeacherController {
     public ClassDTOs.ClassResponse removeStudent(@AuthenticationPrincipal User teacher, @PathVariable Long classId,
             @PathVariable Long studentId) {
         return classRoomService.removeStudent(teacher, classId, studentId);
+    }
+
+    @PostMapping("/tests")
+    public TestDTOs.TestSummary generateTest(@AuthenticationPrincipal User teacher,
+            @Valid @RequestBody TestDTOs.GenerateTestRequest generateTestRequest) {
+        return testService.createTest(teacher, generateTestRequest);
+    }
+
+    @PostMapping("/tests/{testId}/assign")
+    public void assignTest(@AuthenticationPrincipal User teacher, @PathVariable Long testId,
+            @Valid @RequestBody TestDTOs.AssignTestRequest assignTestRequest) {
+        testService.assign(teacher, testId, assignTestRequest);
     }
 }
