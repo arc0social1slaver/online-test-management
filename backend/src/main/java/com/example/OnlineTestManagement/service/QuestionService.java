@@ -15,7 +15,7 @@ import com.example.OnlineTestManagement.exception.ApiException;
 import com.example.OnlineTestManagement.repository.QuestionRepository;
 import com.example.OnlineTestManagement.repository.TagRepository;
 
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class QuestionService {

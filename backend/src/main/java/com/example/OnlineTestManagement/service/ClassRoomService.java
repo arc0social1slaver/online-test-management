@@ -13,7 +13,7 @@ import com.example.OnlineTestManagement.exception.ApiException;
 import com.example.OnlineTestManagement.repository.ClassRoomRepository;
 import com.example.OnlineTestManagement.repository.UserRepository;
 
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ClassRoomService {
