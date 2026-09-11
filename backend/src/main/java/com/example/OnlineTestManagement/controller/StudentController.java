@@ -40,7 +40,7 @@ public class StudentController {
         return testService.openTest(student, testId);
     }
 
-    @PostMapping("/test/{testId}/submit")
+    @PostMapping("/tests/{testId}/submit")
     public TestDTOs.ResultDetail submitTest(@AuthenticationPrincipal User student, @PathVariable Long testId,
             @Valid @RequestBody TestDTOs.SubmitTestRequest submitTestRequest) {
         return testService.submitTest(student, testId, submitTestRequest);
