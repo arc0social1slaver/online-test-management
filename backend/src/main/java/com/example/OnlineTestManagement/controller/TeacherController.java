@@ -8,6 +8,7 @@ import com.example.OnlineTestManagement.entity.User;
 import com.example.OnlineTestManagement.service.AuthService;
 import com.example.OnlineTestManagement.service.ClassRoomService;
 import com.example.OnlineTestManagement.service.QuestionService;
+import com.example.OnlineTestManagement.service.StudentService;
 import com.example.OnlineTestManagement.service.TagService;
 import com.example.OnlineTestManagement.service.TestService;
 
@@ -26,14 +27,21 @@ public class TeacherController {
     private final QuestionService questionService;
     private final ClassRoomService classRoomService;
     private final TestService testService;
+    private final StudentService studentService;
 
     public TeacherController(AuthService authService, TagService tagService, QuestionService questionService,
-            ClassRoomService classRoomService, TestService testService) {
+            ClassRoomService classRoomService, TestService testService, StudentService studentService) {
         this.authService = authService;
         this.tagService = tagService;
         this.questionService = questionService;
         this.classRoomService = classRoomService;
         this.testService = testService;
+        this.studentService = studentService;
+    }
+
+    @GetMapping("/students")
+    public List<AuthDTOs.UserResponse> students(@AuthenticationPrincipal User teacher) {
+        return studentService.getOwnedStudents(teacher);
     }
 
     @PostMapping("/students")
@@ -112,6 +120,11 @@ public class TeacherController {
     public ClassDTOs.ClassResponse removeStudent(@AuthenticationPrincipal User teacher, @PathVariable Long classId,
             @PathVariable Long studentId) {
         return classRoomService.removeStudent(teacher, classId, studentId);
+    }
+
+    @GetMapping("/tests")
+    public List<TestDTOs.TestSummary> tests(@AuthenticationPrincipal User teacher) {
+        return testService.teacherTests(teacher);
     }
 
     @PostMapping("/tests")

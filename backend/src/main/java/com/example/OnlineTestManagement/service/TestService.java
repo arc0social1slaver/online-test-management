@@ -77,6 +77,11 @@ public class TestService {
 
         }
 
+        public List<TestDTOs.TestSummary> teacherTests(User teacher) {
+                return testRepository.findAllByTeacherIdOrderByCreatedAtDesc(teacher.getId()).stream()
+                                .map(this::summary).toList();
+        }
+
         @Transactional
         public void assign(User teacher, Long testId, TestDTOs.AssignTestRequest assignTestRequest) {
                 Test test = testRepository.findByIdAndTeacherId(testId, teacher.getId())
