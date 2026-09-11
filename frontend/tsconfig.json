@@ -16,5 +16,9 @@
     "experimentalDecorators": true,
     "useDefineForClassFields": false
   },
-  "angularCompilerOptions": { "strictInjectionParameters": true, "strictTemplates": true, "enableI18nLegacyMessageIdFormat": false }
+  "angularCompilerOptions": {
+    "strictInjectionParameters": true,
+    "strictTemplates": true,
+    "enableI18nLegacyMessageIdFormat": false
+  }
 }

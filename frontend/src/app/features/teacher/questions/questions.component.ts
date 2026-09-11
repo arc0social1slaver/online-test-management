@@ -150,7 +150,7 @@ export class QuestionsComponent {
   letters = ["A", "B", "C", "D"];
   readonly form: FormGroup;
   get tagIds() {
-    return this.form.controls['tagIds'];
+    return this.form.controls["tagIds"];
   }
   constructor(
     private readonly fb: FormBuilder,

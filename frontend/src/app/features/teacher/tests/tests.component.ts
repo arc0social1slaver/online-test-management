@@ -222,7 +222,7 @@ export class TestsComponent {
       .subscribe({
         next: () => {
           this.assignSuccess = true;
-          this.assignForm.controls['targetId'].setValue(null);
+          this.assignForm.controls["targetId"].setValue(null);
         },
         error: (e) =>
           (this.error = e?.error?.message || "Could not assign test."),
