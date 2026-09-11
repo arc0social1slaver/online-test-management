@@ -114,7 +114,6 @@ Student / Teacher reviews the result
 │   │   ├── main/
 │   │   └── test/
 │   ├── Dockerfile
-│   ├── docker-compose.yml
 │   ├── pom.xml
 │   └── README.md
 │
@@ -126,7 +125,7 @@ Student / Teacher reviews the result
 │   ├── package.json
 │   ├── angular.json
 │   └── README.md
-│
+├── docker-compose.yml
 └── README.md
 ```
 
