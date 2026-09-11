@@ -290,12 +290,12 @@ docker build -t online-test-management-frontend .
 
 ### Run
 
-The container expects `BACKEND_URL` to identify the backend upstream used by Nginx.
+The container expects `API_URL` to identify the backend upstream used by Nginx.
 
 ```bash
 docker run --rm \
   -p 8080:80 \
-  -e BACKEND_URL=https://api.example.com \
+  -e API_URL=https://api.example.com \
   online-test-management-frontend
 ```
 
@@ -378,7 +378,7 @@ Browser
       ↓
 Nginx
       ↓
-BACKEND_URL
+API_URL
       ↓
 Spring Boot backend
 ```
