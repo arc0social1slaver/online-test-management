@@ -44,6 +44,7 @@ public class ClassRoomService {
         ClassRoom cl = new ClassRoom();
         cl.setName(classRequest.name().trim());
         cl.setTeacher(teacher);
+        cl = classRoomRepository.save(cl);
         return toResponse(cl);
     }
 
