@@ -4,9 +4,7 @@ A full-stack web application for managing questions, classes, tests, student ass
 
 ## Live Demo
 
-- **Frontend:** [https://online-test-management-pyiblk-2b6990-187-77-153-25.sslip.io](https://online-test-management-pyiblk-2b6990-187-77-153-25.sslip.io)
-- **Backend / API:** [https://tmapv-backend-w9aaqs-4d8fc7-187-77-153-25.sslip.io](https://tmapv-backend-w9aaqs-4d8fc7-187-77-153-25.sslip.io)
-- **Swagger UI:** [https://tmapv-backend-w9aaqs-4d8fc7-187-77-153-25.sslip.io/swagger-ui/index.html](https://tmapv-backend-w9aaqs-4d8fc7-187-77-153-25.sslip.io/swagger-ui/index.html)
+**Frontend:** [https://online-test-management-pyiblk-2b6990-187-77-153-25.sslip.io](https://online-test-management-pyiblk-2b6990-187-77-153-25.sslip.io)
 
 > The deployment is intended for demonstration purposes
 
